@@ -1,8 +1,17 @@
 ---
 import { getCollection } from "astro:content";
 import ProductCard from "./ProductCard.astro";
+import fetchApi from "../lib/strapi.js";
 
-const products = await getCollection("products");
+const products = await fetchApi({ 
+  endpoint: "products",
+  query:{
+    populate:["image"]
+  },
+  wrappedByKey: "data"
+
+});
+
 ---
 
 <style>
@@ -18,14 +27,15 @@ const products = await getCollection("products");
   }
 </style>
 
-<ul>
+	<ul>
   {
     products.map((product) => (
       <li>
-        <a href={`/products/${product.data.id}`}>
-          <ProductCard product={product.data} />
+        <a href={`/products/${product.documentId}`}>
+          <ProductCard product={product} />
         </a>
       </li>
     ))
   }
 </ul>
+

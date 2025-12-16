@@ -120,8 +120,7 @@ const { product } = Astro.props;
 
 <article class={product.rating.rate > 4.5 && "popular"}>
   <Image
-    src={product.image}
-    alt="Product image"
+    src={import.meta.env.STRAPI_URL + product.image.url}    alt="Product image"
     inferSize
     layout="constrained"
     format={"avif"}
